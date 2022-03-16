@@ -5,27 +5,33 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>POC Sign Plus</title>
+    <script src="./sign_plus.min.js"></script>
+
+    <style>
+        #firma {
+            margin-left: 100px;
+        }
+    </style>
 </head>
 <body>
-    <button id="btnShowSignPlus">Show Sign Plus View</button>
-    <div id="divShowSignPlus"></div>
+    <div id="firma"></div>
+    <button id="clean" onclick="clearSignature()">Borrar</button>
 
     <script>
-        document.getElementById('btnShowSignPlus').addEventListener('click', function() {
-            let width = window.innerWidth;
-            let height = window.innerHeight - 30;
-
-            let id = 'JoseLuisAcosta_Others';
-            let clientId = 'Ej4QpQ33HYwZ2JXYTLCf6c1li3vTLhjm';
-            let documentId = '14f8fc7c-8f04-451e-ad57-a0bb1d8c11e1';
-            let participantId = '7f14c9e4-ed85-41c7-a6ef-ef75ee35e435';
-            let primaryColor = '560000'; // valor numerico correspondiente al hexadecimal del color sin almohadilla (#)
-            let lineColor = '54AEDC'; // valor numerico correspondiente al hexadecimal del color sin almohadilla (#)
-
-
-            let url = 'https://sign.sumamexico.com/signature/' + id + '/' + clientId + '/' + documentId + '/' + participantId + '/' + primaryColor + '/' + lineColor;
-            document.getElementById('divShowSignPlus').innerHTML = '<iframe frameBorder="0" width="' + width + '" height="' + height + '" src="' + url + '" title="Sign Plus"></iframe>';
+        const div = document.querySelector("#firma");
+        const signPlus = new SignPlus(div, {
+            lineWidth: 3,
+            lineHeight: 0.7,
+            fullSize: false,
+            lineColor: "#54AEDC",
+            onEndSignature: function(signatureImage) {
+                console.log(signatureImage);
+            }
         });
+
+        function clearSignature(){
+            signPlus.clear();
+        }
     </script>
-</body>
+</body> 
 </html>
